@@ -1,9 +1,15 @@
+import java.math.BigInteger;
 
 public class Bruch implements Comparable<Bruch>{
     public int zahler;
     public int nenner;
 
     public Bruch(int zahler, int nenner){
+        if(nenner == 0){
+            System.out.println("Nenner can not be 0");
+            //throw new Exception("how to handle this?");
+        }
+
         this.zahler = zahler;
         this.nenner = nenner;
     }
@@ -18,15 +24,7 @@ public class Bruch implements Comparable<Bruch>{
     }
 
     public void kuerzen(){
-        int gcd = 1;
-        for(int i =1; i<this.zahler && i<this.nenner; i++){
-            if(this.zahler%i==0 && this.nenner%i==0){
-                gcd = i;
-            }
-        }
-
-        this.zahler = 1;
-        this.nenner = gcd;
+        //needs ggt? not sure how to do it? 
     }
 
     public Bruch kehrwert(){
@@ -40,11 +38,21 @@ public class Bruch implements Comparable<Bruch>{
 
     @Override
     public int compareTo(Bruch obj){
-        return 0;
+        //not sure about this either
+        obj.kuerzen();
+        this.kuerzen();
+
+        if (this.nenner == obj.nenner) {
+            return 0;
+        } else if (this.nenner > obj.nenner){
+            return -1;
+        } else {
+            return 1;
+        }
     }
 
     public String toString(){
-        return "Zahler: " + this.zahler + " Nenner: " + this.nenner;
+        return "Zahler: " + this.zahler + " Nenner: " + this.nenner + "\n";
     }
 
 }
