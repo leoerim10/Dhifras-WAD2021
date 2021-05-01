@@ -26,10 +26,12 @@
             <form>
                 <div class="mb-3">
                   <label for="login-email" class="form-label">Email address</label>
+                  <span class="required">*</span>
                   <input type="email" class="form-control" id="login-email" required>
                 </div>
                 <div class="mb-3">
                   <label for="login-password" class="form-label">Password</label>
+                  <span class="required">*</span>
                   <input type="password" class="form-control" id="login-password" required>
                 </div>
                 <div class="mb-3 form-check">
@@ -54,7 +56,7 @@
         crossOrigin: true
       }).addTo(map);
       var marker = L.marker([52.5079, 13.3378]).addTo(map);
-      var marker = L.marker([52.5145, 13.3501]).addTo(map);
+      var marker = L.marker([52.5945, 13.3501]).addTo(map);
       var marker = L.marker([52.613, 13.145]).addTo(map);
     </script>
     </div>
@@ -67,22 +69,32 @@
             <form>
                 <div class="mb-3">
                     <label for="add-contact-firstname" class="form-label">First Name</label>
+                    <span class="required">*</span>
                     <input type="text" class="form-control" id="add-contact-firstname" required>
                 </div>
                 <div class="mb-3">
                     <label for="add-contact-lastname" class="form-label">Last Name</label>
+                    <span class="required">*</span>
                     <input type="text" class="form-control" id="add-contact-lastname" required>
                 </div>
                 <div class="mb-3">
                     <label for="add-contact-street" class="form-label">Street</label>
+                    <span class="required">*</span>
                     <input type="text" class="form-control" id="add-contact-street" required>
                 </div>
                 <div class="mb-3">
-                    <label for="add-contact-zip" class="form-label">Zip</label>
+                    <label for="add-contact-zip" class="form-label">ZIP</label>
+                    <span class="required">*</span>
                     <input type="text" class="form-control" id="add-contact-zip" required>
                 </div>
                 <div class="mb-3">
+                    <label for="add-contact-city" class="form-label">City</label>
+                    <span class="required">*</span>
+                    <input type="text" class="form-control" id="add-contact-city">
+                </div>
+                <div class="mb-3">
                     <label for="add-contact-state" class="form-label">State</label>
+                    <span class="required">*</span>
                     <input type="text" class="form-control" id="add-contact-state">
                 </div>
                 <div class="mb-3">
@@ -91,7 +103,7 @@
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="private-public-checkbox" checked>
-                    <label class="form-check-label" for="private-public-checkbox">Private/Public</label>
+                    <label class="form-check-label" for="private-public-checkbox">Private</label>
                 </div>
                 <div class="mb-3">
                     <label for="add-contact-owner" class="form-label">Owner</label>
@@ -131,12 +143,16 @@
                     <input type="text" class="form-control" id="add-contact-state" placeholder="Berlin">
                 </div>
                 <div class="mb-3">
+                    <label for="add-contact-city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="add-contact-city" placeholder="Berlin">
+                </div>
+                <div class="mb-3">
                     <label for="add-contact-country" class="form-label">Country</label>
-                    <input type="text" class="form-control" id="add-contact-country" placeholder="Berlin">
+                    <input type="text" class="form-control" id="add-contact-country" placeholder="Germany">
                 </div>
                 <div class="mb-3 form-check">
                     <input type="checkbox" class="form-check-input" id="private-public-checkbox" checked>
-                    <label class="form-check-label" for="private-public-checkbox">Private/Public</label>
+                    <label class="form-check-label" for="private-public-checkbox">Private</label>
                 </div>
                 <div class="mb-3">
                     <label for="add-contact-owner" class="form-label">Owner</label>
