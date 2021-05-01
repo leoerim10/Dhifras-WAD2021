@@ -27,3 +27,11 @@
     padding-bottom: 50px;
     max-width: 800px;
 }
+
+#map
+.center {
+  margin: auto;
+  width: 20%;
+  border: 3px solid green;
+  padding: 10px;
+}
