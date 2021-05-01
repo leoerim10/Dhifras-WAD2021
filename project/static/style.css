@@ -28,10 +28,9 @@
     max-width: 800px;
 }
 
-#map
-.center {
-  margin: auto;
-  width: 20%;
-  border: 3px solid green;
-  padding: 10px;
+#map{
+    padding-top: 250px;
+    padding-bottom: 50px;
+    margin-left: -250px;
+    margin-right: -250px;
 }
