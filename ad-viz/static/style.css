@@ -25,18 +25,6 @@
     max-width: 800px;
 }
 
-<<<<<<< HEAD:project/static/style.css
-#map{
-    padding-top: 250px;
-    padding-bottom: 50px;
-    margin-left: -250px;
-    margin-right: -250px;
-}
-
-
-.required{
-    color: red;
-=======
 #main-wrapper{
     max-width: 800px; 
     margin-bottom: 200px;
@@ -50,5 +38,4 @@
 
 .main-btn{
     width: 100%;
->>>>>>> 14b48c0e061eaa4012d2e80607a22c21a0d15c81:ad-viz/static/style.css
 }
