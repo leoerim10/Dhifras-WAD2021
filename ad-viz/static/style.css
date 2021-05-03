@@ -26,14 +26,14 @@
 }
 
 #main-wrapper{
-    max-width: 800px; 
-    margin-bottom: 200px;
+    max-width: 1200px; 
+    margin-bottom: 100px;
 }
 
 #map{
     width: 100%;
     height: auto;
-    padding-top: 175px;
+    padding-top: 250px;
 }
 
 .main-btn{
