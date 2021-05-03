@@ -1,11 +1,8 @@
 
-#login-container{
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
 #login-wrapper{
     max-width: 800px;
+    padding-bottom: 50px;
+    padding-top: 50px;
 }
 
 /* Add contact screen */
@@ -28,6 +25,7 @@
     max-width: 800px;
 }
 
+<<<<<<< HEAD:project/static/style.css
 #map{
     padding-top: 250px;
     padding-bottom: 50px;
@@ -38,4 +36,19 @@
 
 .required{
     color: red;
+=======
+#main-wrapper{
+    max-width: 800px; 
+    margin-bottom: 200px;
+}
+
+#map{
+    width: 100%;
+    height: auto;
+    padding-top: 175px;
+}
+
+.main-btn{
+    width: 100%;
+>>>>>>> 14b48c0e061eaa4012d2e80607a22c21a0d15c81:ad-viz/static/style.css
 }
