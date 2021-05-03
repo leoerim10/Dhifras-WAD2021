@@ -1,11 +1,8 @@
 
-#login-container{
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
 #login-wrapper{
     max-width: 800px;
+    padding-bottom: 50px;
+    padding-top: 50px;
 }
 
 /* Add contact screen */
@@ -26,4 +23,19 @@
     padding-top: 50px;
     padding-bottom: 50px;
     max-width: 800px;
+}
+
+#main-wrapper{
+    max-width: 800px; 
+    margin-bottom: 200px;
+}
+
+#map{
+    width: 100%;
+    height: auto;
+    padding-top: 175px;
+}
+
+.main-btn{
+    width: 100%;
 }
