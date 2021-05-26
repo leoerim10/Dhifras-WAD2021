@@ -82,7 +82,7 @@
                 </div>
                 <div class="row mb-4">
                     <div class="col-md-12">
-                        <button class="btn btn-primary main-btn">Add new contact</button>
+                        <button class="btn btn-primary main-btn" onclick="showAddContactScreen()">Add new contact</button>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
     <!--Add-Cotact-Screen-->
     <div class="container" id="add-contact-wrapper">
         <h2>Add Contact Screen</h2>
-        <form>
+        <form id="add-contact-form">
             <div class="mb-3">
                 <label for="add-contact-firstname" class="form-label">First Name</label>
                 <span class="required">*</span>
@@ -128,17 +128,17 @@
             </div>
             <div class="mb-3">
                 <label for="add-contact-country" class="form-label">Country</label>
-                 <input type="text" class="form-control" id="add-contact-country">
+                <input type="text" class="form-control" id="add-contact-country">
             </div>
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="private-public-checkbox" checked>
+                <input type="checkbox" class="form-check-input" id="add-contact-private-public-checkbox" checked>
                 <label class="form-check-label" for="private-public-checkbox">Private</label>
             </div>
             <div class="mb-3">
                 <label for="add-contact-owner" class="form-label">Owner</label>
                 <select class="custom-select" id="add-contact-owner">
                     <option selected value="self">Self</option>
-                    <option value="normalo">Normalo</option>
+                    <option value="normalo" id="normaloOption">Normalo</option>
                  </select>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
@@ -151,39 +151,39 @@
         <h2>Update/Delete Contact Screen</h2>
         <form>
             <div class="mb-3">
-                <label for="add-contact-firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="add-contact-firstname" placeholder="Bob" required>
+                <label for="update-contact-firstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="update-contact-firstname" placeholder="Bob" required>
             </div>
             <div class="mb-3">
-                <label for="add-contact-lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="add-contact-lastname" placeholder="Brown" required>
+                <label for="update-contact-lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="update-contact-lastname" placeholder="Brown" required>
             </div>
             <div class="mb-3">
-                <label for="add-contact-street" class="form-label">Street</label>
-                <input type="text" class="form-control" id="add-contact-street" placeholder="Berliner Straße 22" required>
+                <label for="update-contact-street" class="form-label">Street</label>
+                <input type="text" class="form-control" id="update-contact-street" placeholder="Berliner Straße 22" required>
             </div>
             <div class="mb-3">
-                <label for="add-contact-zip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="add-contact-zip" placeholder="10715" required>
+                <label for="update-contact-zip" class="form-label">Zip</label>
+                <input type="text" class="form-control" id="update-contact-zip" placeholder="10715" required>
             </div>
             <div class="mb-3">
-                <label for="add-contact-state" class="form-label">State</label>
-                <input type="text" class="form-control" id="add-contact-state" placeholder="Berlin">
+                <label for="update-contact-state" class="form-label">State</label>
+                <input type="text" class="form-control" id="update-contact-state" placeholder="Berlin">
             </div>
             <div class="mb-3">
-                <label for="add-contact-city" class="form-label">City</label>
-                <input type="text" class="form-control" id="add-contact-city" placeholder="Berlin">
+                <label for="update-contact-city" class="form-label">City</label>
+                <input type="text" class="form-control" id="update-contact-city" placeholder="Berlin">
             </div>
             <div class="mb-3">
-                <label for="add-contact-country" class="form-label">Country</label>
-                <input type="text" class="form-control" id="add-contact-country" placeholder="Germany">
+                <label for="update-contact-country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="update-contact-country" placeholder="Germany">
             </div>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="private-public-checkbox" checked>
                 <label class="form-check-label" for="private-public-checkbox">Private</label>
             </div>
             <div class="mb-3">
-                <label for="add-contact-owner" class="form-label">Owner</label>
+                <label for="update-contact-owner" class="form-label">Owner</label>
                 <select class="custom-select" id="add-contact-owner">
                     <option value="self">Self</option>
                     <option selected value="normalo">Normalo</option>
