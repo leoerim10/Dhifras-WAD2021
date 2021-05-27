@@ -73,6 +73,8 @@ addcontactform.addEventListener('submit', function(event){
         owner: owner
     };
 
+    console.log(contact);
+
     if(owner == "normalo"){
         normalo_contacts.push(contact);
     } else {
@@ -81,53 +83,66 @@ addcontactform.addEventListener('submit', function(event){
     showMainScreen();
 });
 
-function showLoginScreen() {
-    document.getElementById("login-wrapper").style.display = "block";
-    document.getElementById("main-wrapper").style.display = "none";
-    document.getElementById("add-contact-wrapper").style.display = "none";
-    document.getElementById("update-delete-wrapper").style.display = "none";
-}
-
-function showMainScreen(){
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("main-wrapper").style.display = "block";
-    document.getElementById("add-contact-wrapper").style.display = "none";
-    document.getElementById("update-delete-wrapper").style.display = "none";
-
-
-    //clear contact-list
-    clearContactList();
-
-    if(currentUser == "admina") {
-        document.getElementById("user-greeting").innerHTML = "Hallo, admina!";
-        for(let i=0; i<admina_contacts.length;i++){
+function showAdminaContacts() {
+    if currentUser == "admina"{
+        for(let i=0; i<admina_contacts.length;i++){                
             let name = admina_contacts[i].firstname + " " + admina_contacts[i].lastname;
             addContactToList(name);
         }
     } else {
-        document.getElementById("user-greeting").innerHTML = "Hallo, normalo!";
-        for(let i=0; i<normalo_contacts.length;i++){
-            let name = normalo_contacts[i].firstname + " " + normalo_contacts[i].lastname;
+        for(let i=0;i<admina_contacts.length;i++){
+            if(admina_contacts[i].owner == "normalo"){
+                let name = admina_contacts[i].firstname + " " + admina_contacts[i].lastname;
             addContactToList(name);
+            }
         }
     }
 }
 
-function showAddContactScreen() {
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("main-wrapper").style.display = "none";
-    document.getElementById("add-contact-wrapper").style.display = "block";
-    document.getElementById("update-delete-wrapper").style.display = "none";
-    if(currentUser == "normalo"){
-        document.getElementById("normaloOption").style.display = "none";
+function showNormaloContacts() {
+    for(let i=0; i<normalo_contacts.length;i++){
+        let name = normalo_contacts[i].firstname + " " + normalo_contacts[i].lastname;
+        addContactToList(name);
     }
 }
 
-function showUpldateDeleteContactScreen() {
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("main-wrapper").style.display = "none";
-    document.getElementById("add-contact-wrapper").style.display = "none";
-    document.getElementById("update-delete-wrapper").style.display = "block";
+function addContactToList(text){
+    let node = document.createElement('li');
+    node.className="list-group-item";
+    let textnode = document.createTextNode(text);
+    node.appendChild(textnode);
+    document.getElementById("contact-list").appendChild(node);
+}
+
+function clearContactList(){
+   var node = document.getElementById("contact-list");
+   while(node.firstChild){
+       node.removeChild(node.lastChild);
+   } 
+}
+
+function showAllContacts() {
+    clearContactList();
+    if(currentUser == "admina"){
+        showAdminaContacts();
+        showNormaloContacts();
+    } else {
+        showNormaloContacts();
+    }
+}
+
+function showContacts() {
+    clearContactList();
+    if(currentUser == "admina"){
+        showAdminaContacts();
+    } else {
+        showNormaloContacts();
+    }
+}
+
+function logout(){
+    isLoggedIn = false;
+    showLoginScreen();
 }
 
 function populateContacts() {
@@ -186,22 +201,48 @@ function populateContacts() {
 
 }
 
-function addContactToList(text){
-    let node = document.createElement('li');
-    node.className="list-group-item";
-    let textnode = document.createTextNode(text);
-    node.appendChild(textnode);
-    document.getElementById("contact-list").appendChild(node);
+function showAddContactScreen() {
+    document.getElementById("login-wrapper").style.display = "none";
+    document.getElementById("main-wrapper").style.display = "none";
+    document.getElementById("add-contact-wrapper").style.display = "block";
+    document.getElementById("update-delete-wrapper").style.display = "none";
+    if(currentUser == "normalo"){
+        document.getElementById("normaloOption").style.display = "none";
+    }
 }
 
-function clearContactList(){
-   var node = document.getElementById("contact-list");
-   while(node.firstChild){
-       node.removeChild(node.lastChild);
-   } 
+function showUpldateDeleteContactScreen() {
+    document.getElementById("login-wrapper").style.display = "none";
+    document.getElementById("main-wrapper").style.display = "none";
+    document.getElementById("add-contact-wrapper").style.display = "none";
+    document.getElementById("update-delete-wrapper").style.display = "block";
 }
 
-function logout(){
-    isLoggedIn = false;
-    showLoginScreen();
+function showLoginScreen() {
+    document.getElementById("login-wrapper").style.display = "block";
+    document.getElementById("main-wrapper").style.display = "none";
+    document.getElementById("add-contact-wrapper").style.display = "none";
+    document.getElementById("update-delete-wrapper").style.display = "none";
+}
+
+function showMainScreen(){
+    document.getElementById("login-wrapper").style.display = "none";
+    document.getElementById("main-wrapper").style.display = "block";
+    document.getElementById("add-contact-wrapper").style.display = "none";
+    document.getElementById("update-delete-wrapper").style.display = "none";
+
+
+    //clear contact-list
+    clearContactList();
+
+    if(currentUser == "admina") {
+        document.getElementById("user-greeting").innerHTML = "Hallo, admina!";
+        //populate contact list
+        showAdminaContacts()
+    } else {
+        document.getElementById("user-greeting").innerHTML = "Hallo, normalo!";
+        //populate contact list
+        showNormaloContacts();
+        
+    }
 }
