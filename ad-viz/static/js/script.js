@@ -1,8 +1,29 @@
-var isLoggedIn = false;
-var currentUser = "";
+// map
+var map = L.map('map').setView([0, 0], 1);
+L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Qr01WTE3yKsT',{
+                            tileSize: 512,
+                            zoomOffset: -1,
+                            minZoom: 1,
+                            attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+                            crossOrigin: true
+                        }).addTo(map);
+                        /*
+var marker = L.marker([52.5079, 13.3378]).addTo(map);
+var marker = L.marker([52.5945, 13.3501]).addTo(map);
+var marker = L.marker([52.613, 13.145]).addTo(map);
+*/
+/* end map */
+
+
+/* contacts */
 var admina_contacts = [];
 var normalo_contacts = [];
+populateContacts();
+/* end contacts */
 
+
+var isLoggedIn = false;
+var currentUser = "";
 if (isLoggedIn != true){
     showLoginScreen();
 }
@@ -22,9 +43,11 @@ loginform.addEventListener('submit', function(event){
         currentUser = "normalo";
         showMainScreen();
     } else {
+        //return error - failed login
         isLoggedIn = false;
+        showLoginScreen();
     }
-})
+});
 
 var addcontactform = document.getElementById("add-contact-form");
 addcontactform.addEventListener('submit', function(event){
@@ -47,7 +70,7 @@ addcontactform.addEventListener('submit', function(event){
         city: city,
         state: state,
         country: country,
-        visibility: private,
+        private: private,
         owner: owner
     };
 
@@ -58,7 +81,7 @@ addcontactform.addEventListener('submit', function(event){
         console.log(admina_contacts);
     }
     showMainScreen();
-})
+});
 
 function showLoginScreen() {
     document.getElementById("login-wrapper").style.display = "block";
@@ -97,8 +120,65 @@ function showUpldateDeleteContactScreen() {
     document.getElementById("update-delete-wrapper").style.display = "block";
 }
 
-function populateContactList(){
+function populateContacts() {
+    let contact1 = {
+        firstname: "admina1",
+        lastname: "admina1",
+        street: "street",
+        zip: "12450",
+        city: "Berlin",
+        state: "Berlin",
+        country: "Germany",
+        private: true,
+        owner: "admina"
+    };
+
+    let contact2 = {
+        firstname: "admina2",
+        lastname: "admina2",
+        street: "street",
+        zip: "12451",
+        city: "Berlin",
+        state: "Berlin",
+        country: "Germany",
+        private: false,
+        owner: "admina"
+    };
+
+    let contact3 = {
+        firstname: "normalo1",
+        lastname: "normalo1",
+        street: "street",
+        zip: "12450",
+        city: "Berlin",
+        state: "Berlin",
+        country: "Germany",
+        private: true,
+        owner: "normalo"
+    };
+
+    let contact4 = {
+        firstname: "normalo2",
+        lastname: "normalo2",
+        street: "street",
+        zip: "12450",
+        city: "Berlin",
+        state: "Berlin",
+        country: "Germany",
+        private: false,
+        owner: "normalo"
+    };
+
+    admina_contacts.push(contact1);
+    admina_contacts.push(contact2);
+    normalo_contacts.push(contact3);
+    normalo_contacts.push(contact4);
+
 }
+
+function addContactsToList(array) {
+    for
+}  
 
 function logout(){
     isLoggedIn = false;

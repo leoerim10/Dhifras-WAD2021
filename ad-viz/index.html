@@ -54,19 +54,6 @@
             <div class="col-md-6">
                 <div id="map">
                     <p><a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a></p>
-                    <script>
-                        var map = L.map('map').setView([0, 0], 1);
-                        L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Qr01WTE3yKsT',{
-                            tileSize: 512,
-                            zoomOffset: -1,
-                            minZoom: 1,
-                            attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
-                            crossOrigin: true
-                        }).addTo(map);
-                        var marker = L.marker([52.5079, 13.3378]).addTo(map);
-                        var marker = L.marker([52.5945, 13.3501]).addTo(map);
-                        var marker = L.marker([52.613, 13.145]).addTo(map);
-                    </script>
                 </div>
             </div>
             <div class="col-md-6">
@@ -94,7 +81,6 @@
 
     <!--Add-Cotact-Screen-->
     <div class="container" id="add-contact-wrapper">
-        <h2>Add Contact Screen</h2>
         <form id="add-contact-form">
             <div class="mb-3">
                 <label for="add-contact-firstname" class="form-label">First Name</label>
@@ -180,7 +166,7 @@
             </div>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="private-public-checkbox" checked>
-                <label class="form-check-label" for="private-public-checkbox">Private</label>
+                <label class="form-check-label" for="update-contact-private-public-checkbox">Private</label>
             </div>
             <div class="mb-3">
                 <label for="update-contact-owner" class="form-label">Owner</label>

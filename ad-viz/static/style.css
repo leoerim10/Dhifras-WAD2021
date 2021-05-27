@@ -12,6 +12,7 @@
 }
 
 #add-contact-wrapper{
+    padding-top: 50px;
     max-width: 800px;
 }
 
@@ -26,6 +27,7 @@
 }
 
 #main-wrapper{
+    padding-top: 50px;
     max-width: 1300px; 
     margin-bottom: 100px;
 }
