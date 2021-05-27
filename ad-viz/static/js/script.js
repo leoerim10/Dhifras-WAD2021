@@ -7,11 +7,10 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Q
                             attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
                             crossOrigin: true
                         }).addTo(map);
-                        /*
 var marker = L.marker([52.5079, 13.3378]).addTo(map);
 var marker = L.marker([52.5945, 13.3501]).addTo(map);
 var marker = L.marker([52.613, 13.145]).addTo(map);
-*/
+
 /* end map */
 
 
@@ -78,7 +77,6 @@ addcontactform.addEventListener('submit', function(event){
         normalo_contacts.push(contact);
     } else {
         admina_contacts.push(contact);
-        console.log(admina_contacts);
     }
     showMainScreen();
 });
@@ -96,10 +94,22 @@ function showMainScreen(){
     document.getElementById("add-contact-wrapper").style.display = "none";
     document.getElementById("update-delete-wrapper").style.display = "none";
 
+
+    //clear contact-list
+    clearContactList();
+
     if(currentUser == "admina") {
         document.getElementById("user-greeting").innerHTML = "Hallo, admina!";
+        for(let i=0; i<admina_contacts.length;i++){
+            let name = admina_contacts[i].firstname + " " + admina_contacts[i].lastname;
+            addContactToList(name);
+        }
     } else {
         document.getElementById("user-greeting").innerHTML = "Hallo, normalo!";
+        for(let i=0; i<normalo_contacts.length;i++){
+            let name = normalo_contacts[i].firstname + " " + normalo_contacts[i].lastname;
+            addContactToList(name);
+        }
     }
 }
 
@@ -176,9 +186,20 @@ function populateContacts() {
 
 }
 
-function addContactsToList(array) {
-    for
-}  
+function addContactToList(text){
+    let node = document.createElement('li');
+    node.className="list-group-item";
+    let textnode = document.createTextNode(text);
+    node.appendChild(textnode);
+    document.getElementById("contact-list").appendChild(node);
+}
+
+function clearContactList(){
+   var node = document.getElementById("contact-list");
+   while(node.firstChild){
+       node.removeChild(node.lastChild);
+   } 
+}
 
 function logout(){
     isLoggedIn = false;
