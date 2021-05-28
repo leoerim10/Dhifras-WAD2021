@@ -32,6 +32,10 @@
     margin-bottom: 100px;
 }
 
+#contact-list{
+    padding-top: 20px;
+}
+
 #map{
     width: 100%;
     height: auto;

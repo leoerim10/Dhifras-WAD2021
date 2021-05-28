@@ -84,7 +84,7 @@ addcontactform.addEventListener('submit', function(event){
 });
 
 function showAdminaContacts() {
-    if currentUser == "admina"{
+    if(currentUser == "admina"){
         for(let i=0; i<admina_contacts.length;i++){                
             let name = admina_contacts[i].firstname + " " + admina_contacts[i].lastname;
             addContactToList(name);
