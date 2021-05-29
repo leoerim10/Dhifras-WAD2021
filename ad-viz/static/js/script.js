@@ -147,10 +147,10 @@ function logout(){
 
 function populateContacts() {
     let contact1 = {
-        firstname: "admina1",
-        lastname: "admina1",
-        street: "street",
-        zip: "12450",
+        firstname: "Max",
+        lastname: "Müller",
+        street: "Europaplatz 1",
+        zip: "10557",
         city: "Berlin",
         state: "Berlin",
         country: "Germany",
@@ -159,10 +159,10 @@ function populateContacts() {
     };
 
     let contact2 = {
-        firstname: "admina2",
-        lastname: "admina2",
-        street: "street",
-        zip: "12451",
+        firstname: "Hanna",
+        lastname: "Maier",
+        street: "Georgen Strasse 17",
+        zip: "10117",
         city: "Berlin",
         state: "Berlin",
         country: "Germany",
@@ -171,10 +171,10 @@ function populateContacts() {
     };
 
     let contact3 = {
-        firstname: "normalo1",
-        lastname: "normalo1",
-        street: "street",
-        zip: "12450",
+        firstname: "Leo",
+        lastname: "Schmidt",
+        street: "Dircksen Strasse 2",
+        zip: "10179",
         city: "Berlin",
         state: "Berlin",
         country: "Germany",
@@ -183,10 +183,10 @@ function populateContacts() {
     };
 
     let contact4 = {
-        firstname: "normalo2",
-        lastname: "normalo2",
-        street: "street",
-        zip: "12450",
+        firstname: "Marc",
+        lastname: "Stegen",
+        street: "Berliner Strasse 44",
+        zip: "10173",
         city: "Berlin",
         state: "Berlin",
         country: "Germany",
