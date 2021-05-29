@@ -7,8 +7,10 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Q
                             attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
                             crossOrigin: true
                         }).addTo(map);
+
+var marker = new Array();
 /*
-var marker = L.marker([52.5079, 13.3378]).addTo(map);
+var marker = L.marker([52.449051600000004, 13.449652729225194]).addTo(map);
 var marker = L.marker([52.5945, 13.3501]).addTo(map);
 var marker = L.marker([52.613, 13.145]).addTo(map);
 */
@@ -80,7 +82,7 @@ addcontactform.addEventListener('submit', function(event){
     let baseUrl = "https://nominatim.openstreetmap.org/search/";
     let formattedStreet = contact.street.replace(/\s/g, "%20");
     console.log(formattedStreet)
-    let url = baseUrl + `${formattedStreet}%20${contact.zip}%20${contact.city}%20${contact.state}%20${contact.country}` + `?format=json&addressdetails=1&limit=1`;
+    let url = baseUrl + `${formattedStreet}%20${contact.zip}%20${contact.city}%20${contact.state}%20${contact.country}?format=json&addressdetails=1&limit=1`;
     console.log(url);
 
     request.open("GET", url, true);
@@ -93,13 +95,16 @@ addcontactform.addEventListener('submit', function(event){
     request.onload = function(e) {
         let data = this.response;
         let obj = JSON.parse(data);
-        contact.lat = obj[0].lat;
-        contact.lon = obj[0].lon;
+        console.log(obj);
+        if(this.status == 200){
+            contact.lat = obj[0].lat;
+            contact.lon = obj[0].lon;
+        } else {
+            return
+        }
     };
 
     request.send();
-
-    console.log(contact);
 
     if(owner == "normalo"){
         normalo_contacts.push(contact);
@@ -294,4 +299,18 @@ function hideFailedLoginMessage(){
 
 function updateContact(){
     showUpldateDeleteContactScreen();
+}
+
+function setMarkers(array) {
+    for(let i = 0; i<array.length;i++){
+        var LamMarker = new L.marker([array[i].lat, array[i].lon);
+        marker.push(LamMarker);
+        map.addLayer(marker[i]);
+    }
+}
+
+function clearMap(){
+    for(let i = 0; i<marker.length;i++){
+        map.removeLayer(marker[i]);
+    }   
 }
