@@ -7,9 +7,11 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Q
                             attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
                             crossOrigin: true
                         }).addTo(map);
+/*
 var marker = L.marker([52.5079, 13.3378]).addTo(map);
 var marker = L.marker([52.5945, 13.3501]).addTo(map);
 var marker = L.marker([52.613, 13.145]).addTo(map);
+*/
 /* end map */
 
 
@@ -69,8 +71,33 @@ addcontactform.addEventListener('submit', function(event){
         state: state,
         country: country,
         private: private,
-        owner: owner
+        owner: owner,
+        lat: "",
+        lon: ""
     };
+
+    let request = new XMLHttpRequest();
+    let baseUrl = "https://nominatim.openstreetmap.org/search/";
+    let formattedStreet = contact.street.replace(/\s/g, "%20");
+    console.log(formattedStreet)
+    let url = baseUrl + `${formattedStreet}%20${contact.zip}%20${contact.city}%20${contact.state}%20${contact.country}` + `?format=json&addressdetails=1&limit=1`;
+    console.log(url);
+
+    request.open("GET", url, true);
+
+    request.onerror = function(){
+        console.log("Connecting to the url failed");
+        return
+    };
+
+    request.onload = function(e) {
+        let data = this.response;
+        let obj = JSON.parse(data);
+        contact.lat = obj[0].lat;
+        contact.lon = obj[0].lon;
+    };
+
+    request.send();
 
     console.log(contact);
 
@@ -82,10 +109,6 @@ addcontactform.addEventListener('submit', function(event){
     showMainScreen();
 });
 
-function getGeoCordinates(street, city, state, country, postalcode){
-    let request = new XMLHttpRequest();
-    var baseUrl = "https://nominatim.openstreetmap.org/search?";
-}
 
 function showAdminaContacts() {
     if(currentUser == "admina"){
@@ -161,7 +184,9 @@ function populateContacts() {
         state: "Berlin",
         country: "Germany",
         private: true,
-        owner: "admina"
+        owner: "admina",
+        lat: "",
+        lon: ""
     };
 
     let contact2 = {
@@ -173,7 +198,9 @@ function populateContacts() {
         state: "Berlin",
         country: "Germany",
         private: false,
-        owner: "admina"
+        owner: "admina",
+        lat: "",
+        lon: ""
     };
 
     let contact3 = {
@@ -185,7 +212,9 @@ function populateContacts() {
         state: "Berlin",
         country: "Germany",
         private: true,
-        owner: "normalo"
+        owner: "normalo",
+        lat: "",
+        lon: ""
     };
 
     let contact4 = {
@@ -197,7 +226,9 @@ function populateContacts() {
         state: "Berlin",
         country: "Germany",
         private: false,
-        owner: "normalo"
+        owner: "normalo",
+        lat: "",
+        lon: ""
     };
 
     admina_contacts.push(contact1);
