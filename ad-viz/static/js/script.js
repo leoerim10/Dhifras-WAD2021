@@ -82,6 +82,11 @@ addcontactform.addEventListener('submit', function(event){
     showMainScreen();
 });
 
+function getGeoCordinates(street, city, state, country, postalcode){
+    let request = new XMLHttpRequest();
+    var baseUrl = "https://nominatim.openstreetmap.org/search?";
+}
+
 function showAdminaContacts() {
     if(currentUser == "admina"){
         for(let i=0; i<admina_contacts.length;i++){                
@@ -108,6 +113,7 @@ function showNormaloContacts() {
 function addContactToList(text){
     let node = document.createElement('li');
     node.className="list-group-item";
+    node.setAttribute("onclick", "updateContact()");
     let textnode = document.createTextNode(text);
     node.appendChild(textnode);
     document.getElementById("contact-list").appendChild(node);
@@ -232,7 +238,6 @@ function showMainScreen(){
     document.getElementById("add-contact-wrapper").style.display = "none";
     document.getElementById("update-delete-wrapper").style.display = "none";
 
-
     //clear contact-list
     clearContactList();
 
@@ -254,4 +259,8 @@ function showFailedLoginMessage() {
 
 function hideFailedLoginMessage(){
     document.getElementById("error-message").style.display = "none";
+}
+
+function updateContact(){
+    showUpldateDeleteContactScreen();
 }
