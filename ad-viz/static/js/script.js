@@ -10,7 +10,6 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Q
 var marker = L.marker([52.5079, 13.3378]).addTo(map);
 var marker = L.marker([52.5945, 13.3501]).addTo(map);
 var marker = L.marker([52.613, 13.145]).addTo(map);
-
 /* end map */
 
 
@@ -44,7 +43,7 @@ loginform.addEventListener('submit', function(event){
     } else {
         //return error - failed login
         isLoggedIn = false;
-        showLoginScreen();
+        showFailedLoginMessage();
     }
 });
 
@@ -141,6 +140,7 @@ function showContacts() {
 }
 
 function logout(){
+    hideFailedLoginMessage();
     isLoggedIn = false;
     showLoginScreen();
 }
@@ -219,6 +219,7 @@ function showUpldateDeleteContactScreen() {
 }
 
 function showLoginScreen() {
+    hideFailedLoginMessage();
     document.getElementById("login-wrapper").style.display = "block";
     document.getElementById("main-wrapper").style.display = "none";
     document.getElementById("add-contact-wrapper").style.display = "none";
@@ -245,4 +246,12 @@ function showMainScreen(){
         showNormaloContacts();
         
     }
+}
+
+function showFailedLoginMessage() {
+    document.getElementById("error-message").style.display = "block";
+}
+
+function hideFailedLoginMessage(){
+    document.getElementById("error-message").style.display = "none";
 }
