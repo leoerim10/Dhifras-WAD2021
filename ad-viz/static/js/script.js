@@ -1,4 +1,4 @@
-// map
+// map, check if it works
 var map = L.map('map').setView([0, 0], 1);
 L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Qr01WTE3yKsT',{
                             tileSize: 512,
