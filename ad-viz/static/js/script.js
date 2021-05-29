@@ -181,59 +181,59 @@ function logout(){
 
 function populateContacts() {
     let contact1 = {
-        firstname: "admina1",
-        lastname: "admina1",
-        street: "street",
-        zip: "12450",
+        firstname: "Max",
+        lastname: "Müller",
+        street: "Europaplatz 1",
+        zip: "10557",
         city: "Berlin",
         state: "Berlin",
         country: "Germany",
         private: true,
         owner: "admina",
-        lat: "",
-        lon: ""
+        lat: "52.5257446",
+        lon: "13.3685935"
     };
 
     let contact2 = {
-        firstname: "admina2",
-        lastname: "admina2",
-        street: "street",
-        zip: "12451",
+        firstname: "Hanna",
+        lastname: "Maier",
+        street: "Georgen Strasse 17",
+        zip: "10117",
         city: "Berlin",
         state: "Berlin",
         country: "Germany",
         private: false,
         owner: "admina",
-        lat: "",
-        lon: ""
+        lat: "52.5197592",
+        lon: "13.3868809"
     };
 
     let contact3 = {
-        firstname: "normalo1",
-        lastname: "normalo1",
-        street: "street",
-        zip: "12450",
+        firstname: "Leo",
+        lastname: "Schmidt",
+        street: "Dircksen Strasse 2",
+        zip: "10179",
         city: "Berlin",
         state: "Berlin",
         country: "Germany",
         private: true,
         owner: "normalo",
-        lat: "",
-        lon: ""
+        lat: "52.5211976",
+        lon: "13.4118911"
     };
 
     let contact4 = {
-        firstname: "normalo2",
-        lastname: "normalo2",
-        street: "street",
-        zip: "12450",
+        firstname: "Marc",
+        lastname: "Stegen",
+        street: "Berliner Strasse 44",
+        zip: "10173",
         city: "Berlin",
         state: "Berlin",
         country: "Germany",
         private: false,
         owner: "normalo",
-        lat: "",
-        lon: ""
+        lat: "52.5606059",
+        lon: "13.4123837"
     };
 
     admina_contacts.push(contact1);
@@ -280,7 +280,7 @@ function showMainScreen(){
     if(currentUser == "admina") {
         document.getElementById("user-greeting").innerHTML = "Hallo, admina!";
         //populate contact list
-        showAdminaContacts()
+        showAdminaContacts();
     } else {
         document.getElementById("user-greeting").innerHTML = "Hallo, normalo!";
         //populate contact list
@@ -303,7 +303,7 @@ function updateContact(){
 
 function setMarkers(array) {
     for(let i = 0; i<array.length;i++){
-        var LamMarker = new L.marker([array[i].lat, array[i].lon);
+        var LamMarker = new L.marker([array[i].lat, array[i].lon]);
         marker.push(LamMarker);
         map.addLayer(marker[i]);
     }
