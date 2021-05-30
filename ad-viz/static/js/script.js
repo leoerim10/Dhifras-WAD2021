@@ -165,7 +165,7 @@ function addContactToList(text, id){
     let node = document.createElement('li');
     node.className="list-group-item";
     node.setAttribute("onclick", `updateContact(${id})`);
-    node.setAttribute("data-arg", id);
+    //node.setAttribute("data-arg", id);
     let textnode = document.createTextNode(text);
     node.appendChild(textnode);
     document.getElementById("contact-list").appendChild(node);
@@ -346,7 +346,11 @@ function populateContacts() {
 }
 
 function deleteContact(id) {
-    console.log("delete contact");
-    console.log(id);
+    for(let i=0;i<contacts.length;i++){
+        if(contacts[i].id == id){
+            contacts.splice(i, 1);
+        }
+    }
+    showMainScreen();
 }
 
