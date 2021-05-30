@@ -9,20 +9,28 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Q
                         }).addTo(map);
 
 var marker = new Array();
-/*
-var marker = L.marker([52.449051600000004, 13.449652729225194]).addTo(map);
-var marker = L.marker([52.5945, 13.3501]).addTo(map);
-var marker = L.marker([52.613, 13.145]).addTo(map);
-*/
-/* end map */
+function setMarkers(array) {
+    console.log("setmarkers")
+    for(let i = 0; i<array.length;i++){
+        var LamMarker = new L.marker([array[i].lat, array[i].lon]);
+        marker.push(LamMarker);
+        map.addLayer(marker[i]);
+    }
+}
 
+function clearMap(){
+    console.log("clearmap")
+    for(i=0;i<marker.length;i++) {
+        map.removeLayer(marker[i]);
+    } 
+    marker = [];
+}
 
 /* contacts */
-var admina_contacts = [];
-var normalo_contacts = [];
+var admina_contacts = new Array();
+var normalo_contacts = new Array();
 populateContacts();
 /* end contacts */
-
 
 var isLoggedIn = false;
 var currentUser = "";
@@ -121,11 +129,12 @@ function showAdminaContacts() {
             let name = admina_contacts[i].firstname + " " + admina_contacts[i].lastname;
             addContactToList(name);
         }
+        setMarkers(admina_contacts);
     } else {
         for(let i=0;i<admina_contacts.length;i++){
             if(admina_contacts[i].owner == "normalo"){
                 let name = admina_contacts[i].firstname + " " + admina_contacts[i].lastname;
-            addContactToList(name);
+                addContactToList(name);
             }
         }
     }
@@ -156,9 +165,12 @@ function clearContactList(){
 
 function showAllContacts() {
     clearContactList();
+    clearMap();
     if(currentUser == "admina"){
         showAdminaContacts();
         showNormaloContacts();
+        setMarkers(admina_contacts);
+        setMarkers(normalo_contacts);
     } else {
         showNormaloContacts();
     }
@@ -173,6 +185,62 @@ function showContacts() {
     }
 }
 
+function showAddContactScreen() {
+    document.getElementById("login-wrapper").style.display = "none";
+    document.getElementById("main-wrapper").style.display = "none";
+    document.getElementById("add-contact-wrapper").style.display = "block";
+    document.getElementById("update-delete-wrapper").style.display = "none";
+    if(currentUser == "normalo"){
+        document.getElementById("normaloOption").style.display = "none";
+    }
+}
+
+function showUpldateDeleteContactScreen() {
+    document.getElementById("login-wrapper").style.display = "none";
+    document.getElementById("main-wrapper").style.display = "none";
+    document.getElementById("add-contact-wrapper").style.display = "none";
+    document.getElementById("update-delete-wrapper").style.display = "block";
+}
+
+function showLoginScreen() {
+    hideFailedLoginMessage();
+    document.getElementById("login-wrapper").style.display = "block";
+    document.getElementById("main-wrapper").style.display = "none";
+    document.getElementById("add-contact-wrapper").style.display = "none";
+    document.getElementById("update-delete-wrapper").style.display = "none";
+}
+
+function showMainScreen(){
+    document.getElementById("login-wrapper").style.display = "none";
+    document.getElementById("main-wrapper").style.display = "block";
+    document.getElementById("add-contact-wrapper").style.display = "none";
+    document.getElementById("update-delete-wrapper").style.display = "none";
+
+    //clear contact-list
+    clearContactList();
+    clearMap();
+
+    if(currentUser == "admina") {
+        document.getElementById("user-greeting").innerHTML = "Hallo, admina!";
+        showAdminaContacts();
+    } else {
+        document.getElementById("user-greeting").innerHTML = "Hallo, normalo!";
+        showNormaloContacts();
+    }
+}
+
+function updateContact(e){
+    console.log(e);
+    showUpldateDeleteContactScreen();
+}
+/* login error handling */
+function showFailedLoginMessage() {
+    document.getElementById("error-message").style.display = "block";
+}
+
+function hideFailedLoginMessage(){
+    document.getElementById("error-message").style.display = "none";
+}
 function logout(){
     hideFailedLoginMessage();
     isLoggedIn = false;
@@ -241,76 +309,4 @@ function populateContacts() {
     normalo_contacts.push(contact3);
     normalo_contacts.push(contact4);
 
-}
-
-function showAddContactScreen() {
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("main-wrapper").style.display = "none";
-    document.getElementById("add-contact-wrapper").style.display = "block";
-    document.getElementById("update-delete-wrapper").style.display = "none";
-    if(currentUser == "normalo"){
-        document.getElementById("normaloOption").style.display = "none";
-    }
-}
-
-function showUpldateDeleteContactScreen() {
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("main-wrapper").style.display = "none";
-    document.getElementById("add-contact-wrapper").style.display = "none";
-    document.getElementById("update-delete-wrapper").style.display = "block";
-}
-
-function showLoginScreen() {
-    hideFailedLoginMessage();
-    document.getElementById("login-wrapper").style.display = "block";
-    document.getElementById("main-wrapper").style.display = "none";
-    document.getElementById("add-contact-wrapper").style.display = "none";
-    document.getElementById("update-delete-wrapper").style.display = "none";
-}
-
-function showMainScreen(){
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("main-wrapper").style.display = "block";
-    document.getElementById("add-contact-wrapper").style.display = "none";
-    document.getElementById("update-delete-wrapper").style.display = "none";
-
-    //clear contact-list
-    clearContactList();
-
-    if(currentUser == "admina") {
-        document.getElementById("user-greeting").innerHTML = "Hallo, admina!";
-        //populate contact list
-        showAdminaContacts();
-    } else {
-        document.getElementById("user-greeting").innerHTML = "Hallo, normalo!";
-        //populate contact list
-        showNormaloContacts();
-        
-    }
-}
-
-function showFailedLoginMessage() {
-    document.getElementById("error-message").style.display = "block";
-}
-
-function hideFailedLoginMessage(){
-    document.getElementById("error-message").style.display = "none";
-}
-
-function updateContact(){
-    showUpldateDeleteContactScreen();
-}
-
-function setMarkers(array) {
-    for(let i = 0; i<array.length;i++){
-        var LamMarker = new L.marker([array[i].lat, array[i].lon]);
-        marker.push(LamMarker);
-        map.addLayer(marker[i]);
-    }
-}
-
-function clearMap(){
-    for(let i = 0; i<marker.length;i++){
-        map.removeLayer(marker[i]);
-    }   
 }
