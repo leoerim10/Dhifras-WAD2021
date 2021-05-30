@@ -62,7 +62,7 @@
             <div class="col-md-6">
                 <div class="row mb-4">
                     <div class="col-md-12">
-                        <button class="btn btn-primary main-btn" onclick="showContacts()">Show my contacts</button>
+                        <button class="btn btn-primary main-btn" onclick="showMyContacts()">Show my contacts</button>
                     </div>
                 </div>
                 <div class="row mb-4">
@@ -127,7 +127,7 @@
             <div class="mb-3">
                 <label for="add-contact-owner" class="form-label">Owner</label>
                 <select class="custom-select" id="add-contact-owner">
-                    <option selected value="self">Self</option>
+                    <option selected value="Self">Self</option>
                     <option value="normalo" id="normaloOption">Normalo</option>
                  </select>
             </div>
@@ -140,48 +140,48 @@
     <!--Update/Delete Screen-->
     <div class="container" id="update-delete-wrapper">
         <h2>Update/Delete Contact Screen</h2>
-        <form>
+        <form id="update-contact-form">
             <div class="mb-3">
                 <label for="update-contact-firstname" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="update-contact-firstname" placeholder="Bob" required>
+                <input type="text" class="form-control" id="update-contact-firstname" required>
             </div>
             <div class="mb-3">
                 <label for="update-contact-lastname" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="update-contact-lastname" placeholder="Brown" required>
+                <input type="text" class="form-control" id="update-contact-lastname" required>
             </div>
             <div class="mb-3">
                 <label for="update-contact-street" class="form-label">Street</label>
-                <input type="text" class="form-control" id="update-contact-street" placeholder="Berliner Straße 22" required>
+                <input type="text" class="form-control" id="update-contact-street" required>
             </div>
             <div class="mb-3">
                 <label for="update-contact-zip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="update-contact-zip" placeholder="10715" required>
+                <input type="text" class="form-control" id="update-contact-zip" required>
             </div>
             <div class="mb-3">
                 <label for="update-contact-state" class="form-label">State</label>
-                <input type="text" class="form-control" id="update-contact-state" placeholder="Berlin">
+                <input type="text" class="form-control" id="update-contact-state">
             </div>
             <div class="mb-3">
                 <label for="update-contact-city" class="form-label">City</label>
-                <input type="text" class="form-control" id="update-contact-city" placeholder="Berlin">
+                <input type="text" class="form-control" id="update-contact-city">
             </div>
             <div class="mb-3">
                 <label for="update-contact-country" class="form-label">Country</label>
-                <input type="text" class="form-control" id="update-contact-country" placeholder="Germany">
+                <input type="text" class="form-control" id="update-contact-country">
             </div>
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="private-public-checkbox" checked>
+                <input type="checkbox" class="form-check-input" id="private-public-checkbox">
                 <label class="form-check-label" for="update-contact-private-public-checkbox">Private</label>
             </div>
             <div class="mb-3">
                 <label for="update-contact-owner" class="form-label">Owner</label>
-                <select class="custom-select" id="add-contact-owner">
-                    <option value="self">Self</option>
-                    <option selected value="normalo">Normalo</option>
+                <select class="custom-select" id="update-contact-owner">
+                    <option value="Self">Self</option>
+                    <option value="normalo">Normalo</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
-            <button type="submit" class="btn btn-danger">Delete</button>
+            <button class="btn btn-danger" id="delete-button">Delete</button>
             </form>
             <button class="btn btn-secondary" onclick="showMainScreen()">Go back to Main Screen</button>
         </div>

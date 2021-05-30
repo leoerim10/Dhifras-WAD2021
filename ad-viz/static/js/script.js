@@ -1,4 +1,10 @@
-// map
+var isLoggedIn = false;
+var currentUser = "";
+if (isLoggedIn != true){
+    showLoginScreen();
+}
+
+/* map */
 var map = L.map('map').setView([0, 0], 1);
 L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Qr01WTE3yKsT',{
                             tileSize: 512,
@@ -25,19 +31,14 @@ function clearMap(){
     } 
     marker = [];
 }
+/* end map */
 
 /* contacts */
-var admina_contacts = new Array();
-var normalo_contacts = new Array();
+var contacts = new Array();
 populateContacts();
 /* end contacts */
 
-var isLoggedIn = false;
-var currentUser = "";
-if (isLoggedIn != true){
-    showLoginScreen();
-}
-
+/* login / logout functions */
 var loginform = document.getElementById("login-form");
 loginform.addEventListener('submit', function(event){
     event.preventDefault();
@@ -59,6 +60,22 @@ loginform.addEventListener('submit', function(event){
     }
 });
 
+/* login error handling */
+function showFailedLoginMessage() {
+    document.getElementById("error-message").style.display = "block";
+}
+
+function hideFailedLoginMessage(){
+    document.getElementById("error-message").style.display = "none";
+}
+function logout(){
+    hideFailedLoginMessage();
+    isLoggedIn = false;
+    showLoginScreen();
+}
+
+/*end login / logout functions */
+
 var addcontactform = document.getElementById("add-contact-form");
 addcontactform.addEventListener('submit', function(event){
     event.preventDefault();
@@ -71,8 +88,17 @@ addcontactform.addEventListener('submit', function(event){
     let country = document.getElementById("add-contact-country").value;
     let private = document.getElementById("add-contact-private-public-checkbox").value;
     let owner = document.getElementById("add-contact-owner").value;
+    
+    if(owner == "Self"){
+        if(currentUser == "admina"){
+            owner = "admina"
+        } else {
+            owner = "normalo"
+        }
+    }
 
     let contact = {
+        id: contacts.length + 1,
         firstname: firstname,
         lastname: lastname,
         street: street,
@@ -113,70 +139,63 @@ addcontactform.addEventListener('submit', function(event){
     };
 
     request.send();
-
-    if(owner == "normalo"){
-        normalo_contacts.push(contact);
-    } else {
-        admina_contacts.push(contact);
-    }
+    contacts.push(contact);
+    console.log(contact);
     showMainScreen();
 });
 
 
 function showAdminaContacts() {
-    if(currentUser == "admina"){
-        for(let i=0; i<admina_contacts.length;i++){                
-            let name = admina_contacts[i].firstname + " " + admina_contacts[i].lastname;
-            addContactToList(name);
-        }
-        setMarkers(admina_contacts);
-    } else {
-        for(let i=0;i<admina_contacts.length;i++){
-            if(admina_contacts[i].owner == "normalo"){
-                let name = admina_contacts[i].firstname + " " + admina_contacts[i].lastname;
-                addContactToList(name);
-            }
+    for(let i=0;i<contacts.length;i++){
+        if(contacts[i].owner == "admina"){
+            addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
         }
     }
 }
 
 function showNormaloContacts() {
-    for(let i=0; i<normalo_contacts.length;i++){
-        let name = normalo_contacts[i].firstname + " " + normalo_contacts[i].lastname;
-        addContactToList(name);
+    for(let i=0; i<contacts.length;i++){
+        if(contacts[i].owner == "normalo"){
+            addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+        }
     }
 }
 
-function addContactToList(text){
+function addContactToList(text, id){
     let node = document.createElement('li');
     node.className="list-group-item";
-    node.setAttribute("onclick", "updateContact()");
+    node.setAttribute("onclick", `updateContact(${id})`);
+    node.setAttribute("data-arg", id);
     let textnode = document.createTextNode(text);
     node.appendChild(textnode);
     document.getElementById("contact-list").appendChild(node);
 }
 
 function clearContactList(){
-   var node = document.getElementById("contact-list");
-   while(node.firstChild){
+    var node = document.getElementById("contact-list");
+    while(node.firstChild){
        node.removeChild(node.lastChild);
-   } 
+    } 
 }
 
 function showAllContacts() {
     clearContactList();
-    clearMap();
     if(currentUser == "admina"){
-        showAdminaContacts();
-        showNormaloContacts();
-        setMarkers(admina_contacts);
-        setMarkers(normalo_contacts);
+        for(let i=0; i<contacts.length;i++){
+            addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+        }
     } else {
-        showNormaloContacts();
+        for(let i=0; i<contacts.length;i++){
+            if((contacts[i].owner == "admina") && (contacts[i].private == true)){
+                continue;
+            } else {
+                addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+            }
+        }
     }
 }
 
-function showContacts() {
+function showMyContacts() {
     clearContactList();
     if(currentUser == "admina"){
         showAdminaContacts();
@@ -215,10 +234,8 @@ function showMainScreen(){
     document.getElementById("main-wrapper").style.display = "block";
     document.getElementById("add-contact-wrapper").style.display = "none";
     document.getElementById("update-delete-wrapper").style.display = "none";
-
-    //clear contact-list
     clearContactList();
-    clearMap();
+    //clearMap();
 
     if(currentUser == "admina") {
         document.getElementById("user-greeting").innerHTML = "Hallo, admina!";
@@ -229,26 +246,41 @@ function showMainScreen(){
     }
 }
 
-function updateContact(e){
-    console.log(e);
+function updateContact(id){
+    let contact = getContactByID(id);
+    //add
+    let deleteButton = document.getElementById("delete-button");
+    deleteButton.setAttribute("onclick", `deleteContact(${id})`);
+
+    document.getElementById("update-contact-firstname").defaultValue=contact.firstname;
+    document.getElementById("update-contact-lastname").defaultValue=contact.lastname;
+    document.getElementById("update-contact-street").defaultValue=contact.street;
+    document.getElementById("update-contact-zip").defaultValue=contact.zip;
+    document.getElementById("update-contact-state").defaultValue=contact.state;
+    document.getElementById("update-contact-city").defaultValue=contact.city;
+    document.getElementById("update-contact-country").defaultValue=contact.country;
+    document.getElementById("update-contact-firstname").defaultValue=contact.firstname;
+    document.getElementById("private-public-checkbox").defaultValue=contact.private;
+    if(currentUser == "admina" && contact.owner == "admina"){
+        document.getElementById("update-contact-owner").defaultValue="Self";
+    } else if (currentUser == "normalo" && contact.owner == "normalo"){
+        document.getElementById("update-contact-owner").defaultValue="Self";
+    }
     showUpldateDeleteContactScreen();
 }
-/* login error handling */
-function showFailedLoginMessage() {
-    document.getElementById("error-message").style.display = "block";
+
+function getContactByID(id) {
+    for(let i = 0;i<contacts.length;i++){
+        if(contacts[i].id == id){
+            return contacts[i];
+        }
+    }
 }
 
-function hideFailedLoginMessage(){
-    document.getElementById("error-message").style.display = "none";
-}
-function logout(){
-    hideFailedLoginMessage();
-    isLoggedIn = false;
-    showLoginScreen();
-}
 
 function populateContacts() {
     let contact1 = {
+        id: 1,
         firstname: "Max",
         lastname: "Müller",
         street: "Europaplatz 1",
@@ -263,6 +295,7 @@ function populateContacts() {
     };
 
     let contact2 = {
+        id: 2,
         firstname: "Hanna",
         lastname: "Maier",
         street: "Georgen Strasse 17",
@@ -277,6 +310,7 @@ function populateContacts() {
     };
 
     let contact3 = {
+        id: 3,
         firstname: "Leo",
         lastname: "Schmidt",
         street: "Dircksen Strasse 2",
@@ -291,6 +325,7 @@ function populateContacts() {
     };
 
     let contact4 = {
+        id: 4,
         firstname: "Marc",
         lastname: "Stegen",
         street: "Berliner Strasse 44",
@@ -304,9 +339,14 @@ function populateContacts() {
         lon: "13.4123837"
     };
 
-    admina_contacts.push(contact1);
-    admina_contacts.push(contact2);
-    normalo_contacts.push(contact3);
-    normalo_contacts.push(contact4);
-
+    contacts.push(contact1);
+    contacts.push(contact2);
+    contacts.push(contact3);
+    contacts.push(contact4);
 }
+
+function deleteContact(id) {
+    console.log("delete contact");
+    console.log(id);
+}
+
