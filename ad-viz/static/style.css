@@ -46,6 +46,10 @@
     width: 100%;
 }
 
+.list-group-item{
+    cursor: pointer;
+}
+
 .required{
     color: red;
 }
