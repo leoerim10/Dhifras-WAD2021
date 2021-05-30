@@ -16,7 +16,6 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Q
 
 var marker = new Array();
 function setMarkers(array) {
-    console.log("setmarkers")
     for(let i = 0; i<array.length;i++){
         var LamMarker = new L.marker([array[i].lat, array[i].lon]);
         marker.push(LamMarker);
@@ -25,7 +24,6 @@ function setMarkers(array) {
 }
 
 function clearMap(){
-    console.log("clearmap")
     for(i=0;i<marker.length;i++) {
         map.removeLayer(marker[i]);
     } 
@@ -150,6 +148,9 @@ function showAdminaContacts() {
     for(let i=0;i<contacts.length;i++){
         if(contacts[i].owner == "admina"){
             addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+            let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
+            marker.push(LamMarker);
+            map.addLayer(marker[i]);
         }
     }
 }
@@ -158,6 +159,9 @@ function showNormaloContacts() {
     for(let i=0; i<contacts.length;i++){
         if(contacts[i].owner == "normalo"){
             addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+            let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
+            marker.push(LamMarker);
+            map.addLayer(marker[i]);
         }
     }
 }
@@ -180,9 +184,13 @@ function clearContactList(){
 
 function showAllContacts() {
     clearContactList();
+    clearMap();
     if(currentUser == "admina"){
         for(let i=0; i<contacts.length;i++){
             addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+            let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
+            marker.push(LamMarker);
+            map.addLayer(marker[i]);
         }
     } else {
         for(let i=0; i<contacts.length;i++){
@@ -190,6 +198,9 @@ function showAllContacts() {
                 continue;
             } else {
                 addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+                let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
+                marker.push(LamMarker);
+                map.addLayer(marker[i]);
             }
         }
     }
@@ -197,6 +208,7 @@ function showAllContacts() {
 
 function showMyContacts() {
     clearContactList();
+    clearMap();
     if(currentUser == "admina"){
         showAdminaContacts();
     } else {
@@ -235,7 +247,7 @@ function showMainScreen(){
     document.getElementById("add-contact-wrapper").style.display = "none";
     document.getElementById("update-delete-wrapper").style.display = "none";
     clearContactList();
-    //clearMap();
+    clearMap();
 
     if(currentUser == "admina") {
         document.getElementById("user-greeting").innerHTML = "Hallo, admina!";
