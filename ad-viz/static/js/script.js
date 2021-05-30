@@ -15,13 +15,6 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Q
                         }).addTo(map);
 
 var marker = new Array();
-function setMarkers(array) {
-    for(let i = 0; i<array.length;i++){
-        var LamMarker = new L.marker([array[i].lat, array[i].lon]);
-        marker.push(LamMarker);
-        map.addLayer(marker[i]);
-    }
-}
 
 function clearMap(){
     for(i=0;i<marker.length;i++) {
@@ -367,7 +360,6 @@ function updateContactByID(id, newContact){
         }
     }
 }
-
 
 function populateContacts() {
     let contact1 = {
