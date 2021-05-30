@@ -1,0 +1,18 @@
+5.
+- show admina contacts on the map, when logged in as admina
+
+6.
+- show normalo contacts on the map, when logged in as normalo
+
+8.
+- when click on showallcontacts, show both admina and normalo contacts on the map (private & public)
+- when click on showmycontacts, show only admina contacts on the map
+- populate updatecontact form when click on contact in the list
+
+9.
+- when click on showallcontacts, show both admina and normalo contacts on the map (only public admina)
+- when click on showmycontacts, show only normalo contacts on the map
+- populate updatecontact form when click on contact in the list
+
+extra:
+- button to go back to main screen from update/add form

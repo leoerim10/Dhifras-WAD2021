@@ -139,10 +139,11 @@ addcontactform.addEventListener('submit', function(event){
     };
 
     request.send();
+
     contacts.push(contact);
-    console.log(contact);
     showMainScreen();
 });
+
 
 
 function showAdminaContacts() {
@@ -165,7 +166,6 @@ function addContactToList(text, id){
     let node = document.createElement('li');
     node.className="list-group-item";
     node.setAttribute("onclick", `updateContact(${id})`);
-    //node.setAttribute("data-arg", id);
     let textnode = document.createTextNode(text);
     node.appendChild(textnode);
     document.getElementById("contact-list").appendChild(node);
@@ -246,12 +246,82 @@ function showMainScreen(){
     }
 }
 
+var updatecontactform = document.getElementById("update-contact-form");
+updatecontactform.addEventListener('submit', function(event){
+    event.preventDefault();
+    let firstname = document.getElementById("update-contact-firstname").value;
+    let lastname = document.getElementById("update-contact-lastname").value;
+    let street = document.getElementById("update-contact-street").value;
+    let zip = document.getElementById("update-contact-zip").value;
+    let city = document.getElementById("update-contact-city").value;
+    let state = document.getElementById("update-contact-state").value;
+    let country = document.getElementById("update-contact-country").value;
+    let private = document.getElementById("update-contact-private-public-checkbox").value;
+    let owner = document.getElementById("update-contact-owner").value;
+
+    if(owner == "Self"){
+        if(currentUser == "admina"){
+            owner = "admina"
+        } else {
+            owner = "normalo"
+        }
+    }
+
+    let id = document.getElementById("update-contact-firstname").getAttribute("userid");
+    console.log("id: " + id);
+    let contact = {
+        id: id,
+        firstname: firstname,
+        lastname: lastname,
+        street: street,
+        zip: zip,
+        city: city,
+        state: state,
+        country: country,
+        private: private,
+        owner: owner,
+        lat: "",
+        lon: ""
+    }
+
+    let request = new XMLHttpRequest();
+    let baseUrl = "https://nominatim.openstreetmap.org/search/";
+    let formattedStreet = contact.street.replace(/\s/g, "%20");
+    console.log(formattedStreet)
+    let url = baseUrl + `${formattedStreet}%20${contact.zip}%20${contact.city}%20${contact.state}%20${contact.country}?format=json&addressdetails=1&limit=1`;
+    console.log(url);
+
+    request.open("GET", url, true);
+
+    request.onerror = function(){
+        console.log("Connecting to the url failed");
+        return
+    };
+
+    request.onload = function(e) {
+        let data = this.response;
+        let obj = JSON.parse(data);
+        console.log(obj);
+        if(this.status == 200){
+            contact.lat = obj[0].lat;
+            contact.lon = obj[0].lon;
+        } else {
+            return
+        }
+    };
+
+    request.send();
+    updateContactByID(id, contact);
+    showMainScreen();
+    
+});
+
 function updateContact(id){
     let contact = getContactByID(id);
     //add
     let deleteButton = document.getElementById("delete-button");
     deleteButton.setAttribute("onclick", `deleteContact(${id})`);
-
+    document.getElementById("update-contact-firstname").setAttribute("userid", id);
     document.getElementById("update-contact-firstname").defaultValue=contact.firstname;
     document.getElementById("update-contact-lastname").defaultValue=contact.lastname;
     document.getElementById("update-contact-street").defaultValue=contact.street;
@@ -260,7 +330,7 @@ function updateContact(id){
     document.getElementById("update-contact-city").defaultValue=contact.city;
     document.getElementById("update-contact-country").defaultValue=contact.country;
     document.getElementById("update-contact-firstname").defaultValue=contact.firstname;
-    document.getElementById("private-public-checkbox").defaultValue=contact.private;
+    document.getElementById("update-contact-private-public-checkbox").defaultValue=contact.private;
     if(currentUser == "admina" && contact.owner == "admina"){
         document.getElementById("update-contact-owner").defaultValue="Self";
     } else if (currentUser == "normalo" && contact.owner == "normalo"){
@@ -273,6 +343,15 @@ function getContactByID(id) {
     for(let i = 0;i<contacts.length;i++){
         if(contacts[i].id == id){
             return contacts[i];
+        }
+    }
+}
+
+function updateContactByID(id, newContact){
+    for(let i=0;i<contacts.length;i++){
+        if(contacts[i].id == id){
+            contacts[i] = newContact;
+            return
         }
     }
 }
