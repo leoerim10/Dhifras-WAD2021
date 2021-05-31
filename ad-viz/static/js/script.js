@@ -200,7 +200,7 @@ function addMapLayers(){
 function showAdminaContacts() {
     for(let i=0;i<contacts.length;i++){
         if(contacts[i].owner == "admina"){
-            addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+            addContactToList(` ${contacts[i].firstname} ${contacts[i].lastname}`, contacts[i].id);
             let LamMarker = new L.Marker([contacts[i].lat, contacts[i].lon]);
             marker.push(LamMarker);
         }
@@ -212,7 +212,7 @@ function showNormaloContacts() {
     for(let i=0;i<contacts.length;i++){
         if(contacts[i].owner == "normalo"){
             console.log(contacts[i]);
-            addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+            addContactToList(`${contacts[i].firstname} ${contacts[i].lastname}`, contacts[i].id);
             let newMarker = new L.Marker([contacts[i].lat, contacts[i].lon]);
             marker.push(newMarker);
         }
@@ -242,7 +242,7 @@ function showAllContacts() {
     clearMap();
     if(currentUser == "admina"){
         for(let i=0; i<contacts.length;i++){
-            addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+            addContactToList(` ${contacts[i].firstname} ${contacts[i].lastname}`, contacts[i].id);
             let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
             marker.push(LamMarker);
         }
@@ -252,7 +252,7 @@ function showAllContacts() {
             if((contacts[i].owner == "admina") && (contacts[i].private == true)){
                 continue;
             } else {
-                addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
+                addContactToList(` ${contacts[i].firstname} ${contacts[i].lastname}`, contacts[i].id);
                 let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
                 marker.push(LamMarker);
             }
