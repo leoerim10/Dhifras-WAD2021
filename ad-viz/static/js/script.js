@@ -1,3 +1,64 @@
+
+var marker = new Array();
+var contacts = [
+    {   
+        id: 1,
+        firstname: "Max",
+        lastname: "Müller",
+        street: "Europaplatz 1",
+        zip: "10557",
+        city: "Berlin",
+        state: "Berlin",
+        country: "Germany",
+        private: true,
+        owner: "admina",
+        lat: "52.5257446",
+        lon: "13.3685935"
+    }, 
+    {
+        id: 2,
+        firstname: "Hanna",
+        lastname: "Maier",
+        street: "Georgen Strasse 17",
+        zip: "10117",
+        city: "Berlin",
+        state: "Berlin",
+        country: "Germany",
+        private: false,
+        owner: "admina",
+        lat: "52.5197592",
+        lon: "13.3868809"
+    },
+    {
+        id: 3,
+        firstname: "Leo",
+        lastname: "Schmidt",
+        street: "Dircksen Strasse 2",
+        zip: "10179",
+        city: "Berlin",
+        state: "Berlin",
+        country: "Germany",
+        private: true,
+        owner: "normalo",
+        lat: "52.5211976",
+        lon: "13.4118911",
+    },
+    {
+        id: 4,
+        firstname: "Marc",
+        lastname: "Stegen",
+        street: "Berliner Strasse 44",
+        zip: "10173",
+        city: "Berlin",
+        state: "Berlin",
+        country: "Germany",
+        private: false,
+        owner: "normalo",
+        lat: "52.5606059",
+        lon: "13.4123837",
+    }
+];
+
 var isLoggedIn = false;
 var currentUser = "";
 if (isLoggedIn != true){
@@ -5,7 +66,7 @@ if (isLoggedIn != true){
 }
 
 /* map */
-var map = L.map('map').setView([0, 0], 1);
+var map =  new L.Map('map').setView([0, 0], 1);
 L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Qr01WTE3yKsT',{
                             tileSize: 512,
                             zoomOffset: -1,
@@ -14,20 +75,15 @@ L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=AppM75r8Q
                             crossOrigin: true
                         }).addTo(map);
 
-var marker = new Array();
-
 function clearMap(){
     for(i=0;i<marker.length;i++) {
         map.removeLayer(marker[i]);
     } 
     marker = [];
+    console.log(marker);
 }
 /* end map */
 
-/* contacts */
-var contacts = new Array();
-populateContacts();
-/* end contacts */
 
 /* login / logout functions */
 var loginform = document.getElementById("login-form");
@@ -135,28 +191,34 @@ addcontactform.addEventListener('submit', function(event){
     showMainScreen();
 });
 
-
+function addMapLayers(){
+    for(let i=0;i<marker.length;i++){
+        map.addLayer(marker[i])
+    }
+}
 
 function showAdminaContacts() {
     for(let i=0;i<contacts.length;i++){
         if(contacts[i].owner == "admina"){
             addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
-            let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
+            let LamMarker = new L.Marker([contacts[i].lat, contacts[i].lon]);
             marker.push(LamMarker);
-            map.addLayer(marker[i]);
         }
     }
+    addMapLayers();
 }
 
 function showNormaloContacts() {
-    for(let i=0; i<contacts.length;i++){
+    for(let i=0;i<contacts.length;i++){
         if(contacts[i].owner == "normalo"){
+            console.log(contacts[i]);
             addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
-            let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
-            marker.push(LamMarker);
-            map.addLayer(marker[i]);
+            let newMarker = new L.Marker([contacts[i].lat, contacts[i].lon]);
+            marker.push(newMarker);
         }
+
     }
+    addMapLayers();
 }
 
 function addContactToList(text, id){
@@ -183,8 +245,8 @@ function showAllContacts() {
             addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
             let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
             marker.push(LamMarker);
-            map.addLayer(marker[i]);
         }
+        addMapLayers();
     } else {
         for(let i=0; i<contacts.length;i++){
             if((contacts[i].owner == "admina") && (contacts[i].private == true)){
@@ -193,9 +255,9 @@ function showAllContacts() {
                 addContactToList(`ID:${contacts[i].id} Firstname:${contacts[i].firstname} Lastname:${contacts[i].lastname}`, contacts[i].id);
                 let LamMarker = new L.marker([contacts[i].lat, contacts[i].lon]);
                 marker.push(LamMarker);
-                map.addLayer(marker[i]);
             }
         }
+        addMapLayers();
     }
 }
 
@@ -359,73 +421,6 @@ function updateContactByID(id, newContact){
             return
         }
     }
-}
-
-function populateContacts() {
-    let contact1 = {
-        id: 1,
-        firstname: "Max",
-        lastname: "Müller",
-        street: "Europaplatz 1",
-        zip: "10557",
-        city: "Berlin",
-        state: "Berlin",
-        country: "Germany",
-        private: true,
-        owner: "admina",
-        lat: "52.5257446",
-        lon: "13.3685935"
-    };
-
-    let contact2 = {
-        id: 2,
-        firstname: "Hanna",
-        lastname: "Maier",
-        street: "Georgen Strasse 17",
-        zip: "10117",
-        city: "Berlin",
-        state: "Berlin",
-        country: "Germany",
-        private: false,
-        owner: "admina",
-        lat: "52.5197592",
-        lon: "13.3868809"
-    };
-
-    let contact3 = {
-        id: 3,
-        firstname: "Leo",
-        lastname: "Schmidt",
-        street: "Dircksen Strasse 2",
-        zip: "10179",
-        city: "Berlin",
-        state: "Berlin",
-        country: "Germany",
-        private: true,
-        owner: "normalo",
-        lat: "52.5211976",
-        lon: "13.4118911"
-    };
-
-    let contact4 = {
-        id: 4,
-        firstname: "Marc",
-        lastname: "Stegen",
-        street: "Berliner Strasse 44",
-        zip: "10173",
-        city: "Berlin",
-        state: "Berlin",
-        country: "Germany",
-        private: false,
-        owner: "normalo",
-        lat: "52.5606059",
-        lon: "13.4123837"
-    };
-
-    contacts.push(contact1);
-    contacts.push(contact2);
-    contacts.push(contact3);
-    contacts.push(contact4);
 }
 
 function deleteContact(id) {
