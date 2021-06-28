@@ -2,7 +2,6 @@ version: '3.7'
 services:
   database:
     image: mongo
-    restart: always
     command: ["--bind_ip_all"]
     environment:
       MONGO_INITDB_DATABASE: admin
