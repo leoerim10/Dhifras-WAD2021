@@ -6,14 +6,17 @@ db.createCollection("contacts", {
         $jsonSchema: {
             bsonType: "object",
             properties: {
-                firstname: {
+                firstName: {
                     bsonType: "string",
+                    description: "contact's first name"
                 },
-                lastname: {
+                lastName: {
                     bsonType: "string",
+                    description: "contacts last name"
                 },
-                street: {
+                streetNumber: {
                     bsonType: "string",
+                    description: "Street and House Number of a contact"
                 },
                 city: {
                     bsonType: "string",
@@ -24,7 +27,7 @@ db.createCollection("contacts", {
                 country: {
                     bsonType: "string",
                 },
-                private: {
+                isPublic: {
                     bsonType: "bool",
                 },
                 owner: {
@@ -36,12 +39,12 @@ db.createCollection("contacts", {
                 lon: {
                     bsonType: "string",
                 },
-                created_at: {
+                createdAt: {
                     bsonType: "string",
                     description: "RFC3339 time stamp, that shows when the entry was last created.",
                     pattern : "^\\d{4}-\\d{2}-\\d{2}T\\d{2}%3A\\d{2}%3A\\d{2}(?:%2E\\d+)?[A-Z]?(?:[+.-](?:08%3A\\d{2}|\\d{2}[A-Z]))?$"
                 },
-                modified_at: {
+                modifiedAt: {
                     bsonType: "string",
                     description: "RFC3339 time stamp, that shows when the entry was last modified.",
                     pattern : "^\\d{4}-\\d{2}-\\d{2}T\\d{2}%3A\\d{2}%3A\\d{2}(?:%2E\\d+)?[A-Z]?(?:[+.-](?:08%3A\\d{2}|\\d{2}[A-Z]))?$"
