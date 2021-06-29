@@ -11,3 +11,7 @@ services:
       - ./database:/docker-entrypoint-initdb.d:ro
     ports:
       - '27017-27019:27017-27019'
+  server:
+    build: ./server
+    dockerfile: Dockerfile
+    
