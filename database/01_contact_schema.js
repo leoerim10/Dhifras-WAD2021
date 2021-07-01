@@ -35,6 +35,7 @@ db.createCollection("contacts", {
                 },
                 lat: {
                     bsonType: "string",
+                    description: "geo c"
                 },
                 lon: {
                     bsonType: "string",

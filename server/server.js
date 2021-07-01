@@ -32,6 +32,26 @@ app.get("/", (req, res) => {
     });
 });
 
+app.post("/login",  (req, res) => {
+    console.log("login endpoint");
+});
+
+app.post("/contacts", (req, res) => {
+    console.log("post /contact endpoint");
+});
+
+app.get("contacts", (res, req) => {
+
+});
+
+app.put("contacts", (rwq, res) => {
+
+});
+
+app.delete("contacts/:id", (req, res) => {
+
+});
+
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
