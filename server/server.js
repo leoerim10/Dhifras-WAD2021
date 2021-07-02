@@ -1,3 +1,25 @@
 const express = require('express');
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose');
 require('dotenv').config()
+
+const app = express();
+const PORT = process.env.PORT || 8080;
+
+mongoose.connect("mongodb://root:password@localhost:27017/admin?authSource=admin&readPreference=primary&gssapiServiceName=mongodb&appname=MongoDB%20Compass&ssl=false", { useNewUrlParser: true})
+.then(() => {
+    console.log("[+] Connected to the database on port 27017!");
+})
+.catch(err => {
+    console.log(err);
+    return;
+})
+
+
+app.get('/', (req, res) => {
+    res.send("Hello World");
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on port :${PORT}`);
+});
