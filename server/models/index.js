@@ -9,4 +9,6 @@ db.url = dbConfig.url;
 db.users = require("./user.js") (mongoose);
 db.contacts = require("./contact.js") (mongoose);
 
+db.on()
+
 module.exports = db;

@@ -33,7 +33,14 @@ app.get("/", (req, res) => {
 });
 
 app.post("/login",  (req, res) => {
-    console.log("login endpoint");
+    const { username, password } = req.body;
+    // check password in the database
+});
+
+app.post("/register", (req, res) => {
+    const {username, email, passord1, password2} = req.body;
+    console.log(req.body)
+    res.status(400)
 });
 
 app.post("/contacts", (req, res) => {
@@ -44,7 +51,7 @@ app.get("contacts", (res, req) => {
 
 });
 
-app.put("contacts", (rwq, res) => {
+app.put("contacts", (req, res) => {
 
 });
 

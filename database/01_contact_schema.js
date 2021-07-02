@@ -29,6 +29,7 @@ db.createCollection("contacts", {
                 },
                 isPublic: {
                     bsonType: "bool",
+                    default: "true",
                 },
                 owner: {
                     bsonType: "objectId",
