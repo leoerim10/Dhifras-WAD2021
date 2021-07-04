@@ -10,4 +10,14 @@ services:
     volumes:
       - ./database:/docker-entrypoint-initdb.d:ro
     ports:
-      - '27017-27019:27017-27019'    
+      - '27017-27019:27017-27019'
+    networks: 
+      - default    
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports: 
+      - "8080:8080"
+    networks: 
+      - default 
