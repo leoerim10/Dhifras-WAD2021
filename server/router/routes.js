@@ -66,7 +66,7 @@ router.post("/contacts", (req, res) => {
         state: req.body.state,
         country: req.body.country,
         isPublic: req.body.isPublic,
-        owner: req.body.Owner,
+        owner: req.body.owner,
         geoCords: req.body.geoCords,
         createdAt: dn,
         modifiedAt: dn,
@@ -84,21 +84,28 @@ router.post("/contacts", (req, res) => {
 });
 
 router.get("/contacts", async (req, res) => {
-    let id = req.query.id;
-    try {
-        let contacts = await Contact.find({"owner": id});
+    let owner = req.query.id;
+    if(owner == ""){
+        let contacts = await Contacts.find();
         return res.status(200).json({
             "contacts": contacts,
         });
-    } catch (e){
-        return res.status(400).json({
-            "message": "Invalid owner id",
+    } else {
+        let contacts = await Contact.find({"owner": owner});
+        return res.status(200).json({
+            "contacts": contacts
         });
     }
 });
 
 router.put("/contacts/:id", (req, res) => {
-    
+    let id = req.params.id;
+    if(id == "" || id === undefined){
+        res.status(400).json({
+            "message": "invalid request",
+        });
+    }
+
     return res.statusCode(204).send();
 });
 
