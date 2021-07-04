@@ -2,10 +2,9 @@ const express = require('express');
 const crypt = require('../utils/crypt.js');
 const router = express.Router();
 
-
+//database models
 const User = require('../models/User.js');
 const Contact = require('../models/Contact.js')
-
 
 router.post("/register", async (req, res) => {
     const { username, password1, password2 } = req.body;
@@ -39,6 +38,11 @@ router.post("/login", async (req, res) => {
     const {username, password} = req.body;
     //get users password from the database
     const user = await User.findOne({"username": username})
+    if(user == null){
+        return res.status(404).json({
+            "message": "User not found"
+        });
+    }
     let valid = await crypt.checkPassword(user.passwordHash, password)
     if (valid == false){
         res.status(401).json({
@@ -76,7 +80,7 @@ router.post("/contacts", (req, res) => {
 
     console.log(newContact);
 
-    return res.status(201);
+    return res.status(201).send();
 });
 
 router.get("/contacts", async (req, res) => {
@@ -94,13 +98,29 @@ router.get("/contacts", async (req, res) => {
 });
 
 router.put("/contacts/:id", (req, res) => {
-    return res.statusCode(204)
+    
+    return res.statusCode(204).send();
 });
 
 router.delete("/contacts/:id", (req, res) => {
     let id = req.params.id;
-    Contact.deleteOne({"_id": id})
-    return res.statusCode(204);
+    if(id == "" || id === undefined){
+        res.status(400).json({
+            "message": "invalid request",
+        });
+    }
+    Contact.findByIdAndDelete(id, (err, contact) => {
+        if(err){
+            if(err.name == "CastError"){
+                return res.status(400).json({
+                    "message": "invalid id"
+                });
+            } else {
+                return res.status(500).json(err)
+            }
+        }
+        return res.status(204).send();
+    })
 });
 
 
