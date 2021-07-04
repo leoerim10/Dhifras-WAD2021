@@ -7,7 +7,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 8080;
 
 mongoose.connect("mongodb://root:password@localhost:27017/admin?authSource=admin&readPreference=primary&gssapiServiceName=mongodb&appname=MongoDB%20Compass&ssl=false", 
-{ useNewUrlParser: true, useUnifiedTopology: true })
+{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:true })
 .then(() => {
     console.log("[+] Connected to the database on port 27017!");
 })

@@ -107,6 +107,23 @@ router.put("/contacts/:id", (req, res) => {
         });
     }
 
+    const dn = Date.now().toString();
+    let newContact = Contact({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        streetNumber: req.body.streetNumber,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        isPublic: req.body.isPublic,
+        owner: req.body.owner,
+        geoCords: req.body.geoCords,
+        createdAt: req.body.createdAt,
+        modifiedAt: dn,
+    })
+
+    Contact.findOneAndReplace({"_id": id}, newContact);
+
     return res.statusCode(204).send();
 });
 
