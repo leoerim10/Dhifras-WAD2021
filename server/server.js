@@ -15,10 +15,10 @@ mongoose.connect("mongodb://root:password@localhost:27017/admin?authSource=admin
     return;
 })
 
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.get('/', (req, res) => {
-    res.send("Hello World");
-});
+app.use('/api', require('./router/routes.js'))
 
 app.listen(PORT, () => {
     console.log(`Server running on port :${PORT}`);

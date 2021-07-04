@@ -16,5 +16,4 @@ const schema = mongoose.Schema({
     modifiedAt: String
 });
 
-
 module.exports = mongoose.model("Contact", schema);
