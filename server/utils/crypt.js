@@ -8,7 +8,6 @@ const generatePassswordHash = async (plainText) => {
 
 const checkPassword = async (hashedPassword, plainText) => {
     const valid = await bcrypt.compare(plainText, hashedPassword);
-    console.log(valid);
     return valid;
 }
 
