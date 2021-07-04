@@ -1,12 +1,13 @@
 const express = require('express');
-const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 require('dotenv').config()
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 8080;
 
-mongoose.connect("mongodb://root:password@localhost:27017/admin?authSource=admin&readPreference=primary&gssapiServiceName=mongodb&appname=MongoDB%20Compass&ssl=false", { useNewUrlParser: true})
+mongoose.connect("mongodb://root:password@localhost:27017/admin?authSource=admin&readPreference=primary&gssapiServiceName=mongodb&appname=MongoDB%20Compass&ssl=false", 
+{ useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => {
     console.log("[+] Connected to the database on port 27017!");
 })
@@ -17,7 +18,6 @@ mongoose.connect("mongodb://root:password@localhost:27017/admin?authSource=admin
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
 app.use('/api', require('./router/routes.js'))
 
 app.listen(PORT, () => {

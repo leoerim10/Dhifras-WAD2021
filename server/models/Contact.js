@@ -7,7 +7,7 @@ const schema = mongoose.Schema({
     state: String,
     country: String,
     isPublic: Boolean,
-    owner: mongoose.Types.ObjectId,
+    owner: String,
     geoCords: {
         lat: String,
         lon: String
