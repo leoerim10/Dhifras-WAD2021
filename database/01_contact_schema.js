@@ -43,13 +43,11 @@ db.createCollection("contacts", {
                 },
                 createdAt: {
                     bsonType: "string",
-                    description: "RFC3339 time stamp, that shows when the entry was last created.",
-                    pattern : "^\\d{4}-\\d{2}-\\d{2}T\\d{2}%3A\\d{2}%3A\\d{2}(?:%2E\\d+)?[A-Z]?(?:[+.-](?:08%3A\\d{2}|\\d{2}[A-Z]))?$"
+                    description: "RFC3339 time stamp, that shows when the entry was last created."
                 },
                 modifiedAt: {
                     bsonType: "string",
-                    description: "RFC3339 time stamp, that shows when the entry was last modified.",
-                    pattern : "^\\d{4}-\\d{2}-\\d{2}T\\d{2}%3A\\d{2}%3A\\d{2}(?:%2E\\d+)?[A-Z]?(?:[+.-](?:08%3A\\d{2}|\\d{2}[A-Z]))?$"
+                    description: "RFC3339 time stamp, that shows when the entry was last modified."
                 },
             },
         },
