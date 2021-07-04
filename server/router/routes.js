@@ -84,9 +84,10 @@ router.post("/contacts", (req, res) => {
 });
 
 router.get("/contacts", async (req, res) => {
-    let owner = req.query.id;
-    if(owner == ""){
-        let contacts = await Contacts.find();
+    let owner = req.query.userid;
+    console.log(owner);
+    if(owner == "" || owner === undefined){
+        let contacts = await Contact.find();
         return res.status(200).json({
             "contacts": contacts,
         });
