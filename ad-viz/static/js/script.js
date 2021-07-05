@@ -92,19 +92,32 @@ loginform.addEventListener('submit', function(event){
     var username = document.getElementById("login-username").value;
     var password = document.getElementById("login-password").value;
 
-    if(username == "admina" && password == "admina"){
-        isLoggedIn = true;
-        currentUser = "admina";
+    const json = {
+        username: username,
+        password: password
+    };
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8080/api/login', true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    
+    xhr.onerror = function(){
+        console.log("Connecting to the url failed");
+        return
+    };
+
+    xhr.onload = function(e){
+       if(this.status == 200){
+        let response = this.response;
+        let obj = JSON.parse(response);
+        currentUser = obj.user;
         showMainScreen();
-    } else if (username == "normalo" && password == "normalo"){
-        isLoggedIn = true;
-        currentUser = "normalo";
-        showMainScreen();
-    } else {
-        //return error - failed login
-        isLoggedIn = false;
-        showFailedLoginMessage();
+       } else if (this.status == 401){
+           showFailedLoginMessage();
+       }
     }
+
+    xhr.send(JSON.stringify(json));
 });
 
 /* login error handling */

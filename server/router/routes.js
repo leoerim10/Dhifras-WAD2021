@@ -45,14 +45,14 @@ router.post("/login", async (req, res) => {
     }
     let valid = await crypt.checkPassword(user.passwordHash, password)
     if (valid == false){
-        res.status(401).json({
+        return res.status(401).json({
             "messsage": "Authentication failed",
         });
-        return
     }
 
-    res.status(200).json({
-        "message": "Authenticated"
+    return res.status(200).json({
+        message: "Authenticated",
+        user: username
     })
 });
 
@@ -134,7 +134,7 @@ router.delete("/contacts/:id", (req, res) => {
             "message": "invalid request",
         });
     }
-    Contact.findByIdAndDelete(id, (err, contact) => {
+    Contact.findByIdAndDelete(id, (err) => {
         if(err){
             if(err.name == "CastError"){
                 return res.status(400).json({
