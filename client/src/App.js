@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {
   BrowserRouter,
   Route,
@@ -6,23 +6,13 @@ import {
 } from 'react-router-dom';
 import Dashboard from "./Pages/Dashboard";
 import Login from "./Pages/Login";
-
-function setToken(jwtToken){
-  sessionStorage.setItem('token', JSON.stringify(jwtToken));
-}
-
-function getToken(){
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token;
-}
+import useToken from "./Components/useToken";
 
 function App() {
 
-  const token = getToken();
-
+  const {token, setToken} = useToken();
   if(!token){
-    return <Login setToken={token} />
+    return <Login setToken={setToken} />
   }
 
   return (

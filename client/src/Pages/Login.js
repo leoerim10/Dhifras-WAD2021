@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 
 async function loginUser(creds) {
-    return fetch('http://localhost:8080/login', {
+    return fetch('http://localhost:8080/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -15,8 +15,8 @@ async function loginUser(creds) {
 
 const Login = ({setToken}) => {
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -24,23 +24,26 @@ const Login = ({setToken}) => {
             username,
             password
         });
+
+        console.log(token);
+
         setToken(token);
     }
 
     return (
         <div className="container" id="login-wrapper">
         <form id="login-form" onSubmit={handleSubmit}>
-            <div class="mb-3">
+            <div className="mb-3">
                 <label for="login-username" className="form-label">Username</label>
                 <span className="required">*</span>
-                <input type="text" class="form-control" id="login-username" required onChange={e => setUsername(e.target.value)}/>
+                <input type="text" className="form-control" id="login-username" required onChange={e => setUsername(e.target.value)}/>
             </div>
             <div className="mb-3">
                 <label for="login-password" className="form-label">Password</label>
                 <span className="required">*</span>
                 <input type="password" className="form-control" id="login-password" required onChange={e => setPassword(e.target.value)}/>
             </div>
-            <div class="mb-3 form-check">
+            <div className="mb-3 form-check">
                 <input type="checkbox" className="form-check-input" id="exampleCheck1" />
                 <label className="form-check-label" for="exampleCheck1">Remember me</label>
             </div>
