@@ -34,18 +34,18 @@ const Login = ({setToken}) => {
         <div className="container" id="login-wrapper">
         <form id="login-form" onSubmit={handleSubmit}>
             <div className="mb-3">
-                <label for="login-username" className="form-label">Username</label>
+                <label htmlFor="login-username" className="form-label">Username</label>
                 <span className="required">*</span>
                 <input type="text" className="form-control" id="login-username" required onChange={e => setUsername(e.target.value)}/>
             </div>
             <div className="mb-3">
-                <label for="login-password" className="form-label">Password</label>
+                <label htmlFor="login-password" className="form-label">Password</label>
                 <span className="required">*</span>
                 <input type="password" className="form-control" id="login-password" required onChange={e => setPassword(e.target.value)}/>
             </div>
             <div className="mb-3 form-check">
                 <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                <label className="form-check-label" for="exampleCheck1">Remember me</label>
+                <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
             </div>
             <div>
                 <p id="error-message" style={{color: "red"}}>Login failed, please try again.</p>

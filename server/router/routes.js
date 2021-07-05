@@ -35,8 +35,10 @@ router.post("/register", async (req, res) => {
 
 
 router.post("/login", async (req, res) => {
+    console.log("[*] Login route...");
     const {username, password} = req.body;
     //get users password from the database
+    console.log(`[*] Username : ${username} Password: ${password}`);
     const user = await User.findOne({"username": username})
     if(user == null){
         return res.status(404).json({
@@ -51,9 +53,9 @@ router.post("/login", async (req, res) => {
         return
     }
 
-    res.status(200).json({
-        "message": "Authenticated"
-    })
+    return res.status(200).json({
+        "token": "token123"
+    });
 });
 
 router.post("/contacts", (req, res) => {
