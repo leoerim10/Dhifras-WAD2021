@@ -15,12 +15,18 @@ router.post("/register", async (req, res) => {
             "message": "Passwords do not match",
         });
     }
+
+    var isAdmin = false;
+    if(username == "admina"){
+        isAdmin = true;
+    }
     
     const passwordHash = await crypt.generatePassswordHash(password1);
     const dn = Date.now().toString();
     const newUser = new User({
         username: username,
         passwordHash: passwordHash,
+        isAdmin: isAdmin,
         createdAt: dn,
         updatedAt: dn
     });
@@ -57,6 +63,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/contacts", (req, res) => {
+    console.log("[*] Adding a new contact...")
     const dn = Date.now().toString();
     const newContact = new Contact({
         firstName: req.body.firstName,
@@ -67,7 +74,8 @@ router.post("/contacts", (req, res) => {
         country: req.body.country,
         isPublic: req.body.isPublic,
         owner: req.body.owner,
-        geoCords: req.body.geoCords,
+        lat: req.body.lat,
+        lon: req.body.lon,
         createdAt: dn,
         modifiedAt: dn,
     });
@@ -80,7 +88,9 @@ router.post("/contacts", (req, res) => {
 
     console.log(newContact);
 
-    return res.status(201).send();
+    return res.status(201).json({
+        id: newContact.id
+    });
 });
 
 router.get("/contacts", async (req, res) => {
@@ -88,6 +98,7 @@ router.get("/contacts", async (req, res) => {
     console.log(owner);
     if(owner == "" || owner === undefined){
         let contacts = await Contact.find();
+        console.log(contacts);
         return res.status(200).json({
             "contacts": contacts,
         });
@@ -99,7 +110,7 @@ router.get("/contacts", async (req, res) => {
     }
 });
 
-router.put("/contacts/:id", (req, res) => {
+router.put("/contacts/:id", async (req, res) => {
     let id = req.params.id;
     if(id == "" || id === undefined){
         res.status(400).json({
@@ -108,7 +119,7 @@ router.put("/contacts/:id", (req, res) => {
     }
 
     const dn = Date.now().toString();
-    let newContact = Contact({
+    let newContact = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         streetNumber: req.body.streetNumber,
@@ -117,14 +128,20 @@ router.put("/contacts/:id", (req, res) => {
         country: req.body.country,
         isPublic: req.body.isPublic,
         owner: req.body.owner,
-        geoCords: req.body.geoCords,
+        lat: req.body.lat,
+        lon: req.body.lon,
         createdAt: req.body.createdAt,
         modifiedAt: dn,
-    })
+    };
 
-    Contact.findOneAndReplace({"_id": id}, newContact);
+    let doc = await Contact.updateOne({"_id": id}, newContact, {
+        returnOriginal: false
+    });
 
-    return res.statusCode(204).send();
+    console.log(doc);
+
+    return res.status(204).send();
+
 });
 
 router.delete("/contacts/:id", (req, res) => {
@@ -141,13 +158,11 @@ router.delete("/contacts/:id", (req, res) => {
                     "message": "invalid id"
                 });
             } else {
-                return res.status(500).json(err)
+                return res.status(500).json(err);
             }
         }
         return res.status(204).send();
     })
 });
-
-
 
 module.exports = router;
